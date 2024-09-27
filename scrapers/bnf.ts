@@ -52,14 +52,14 @@ export default async function* scrape() {
         // Example IIIF Manifest ID:
         //   https://gallica.bnf.fr/iiif/ark:/12148/btv1b532811736/manifest.json
         // Example IIIF Image ID:
-        //   https://gallica.bnf.fr/iiif/ark:/12148/btv1b532811736/f1/info.json
+        //   https://gallica.bnf.fr/iiif/ark:/12148/btv1b532811736/f1
 
         const match = link.match(/ark:\/(?<id>.+)/)
         const id = match?.groups?.id
 
         const title = record['srw:recordData']['oai_dc:dc']['dc:title']
         const manifestId = `https://gallica.bnf.fr/iiif/ark:/${id}/manifest.json`
-        const imageId = `https://gallica.bnf.fr/iiif/ark:/${id}/f1/info.json`
+        const imageId = `https://gallica.bnf.fr/iiif/ark:/${id}/f1`
 
         if (title && manifestId && imageId) {
           yield {
