@@ -12,12 +12,16 @@ const scrapers = positionals.slice(2)
 
 const glob = new Glob('./scrapers/**/*.ts')
 
+let foundScraper = false
+let availableScrapers: string[] = []
+
 for await (const file of glob.scan('.')) {
   const match = file.match(/scrapers\/(?<id>\w+).ts/)
   const id = match?.groups?.id
 
   if (scrapers.length) {
     if (id && scrapers.includes(id)) {
+      foundScraper = true
       console.log(`Scraping ${id}...`)
 
       const { default: scrape } = await import(file)
@@ -30,7 +34,12 @@ for await (const file of glob.scan('.')) {
 
       stream.end()
     }
-  } else {
-    console.log('Available scraper:', id)
+  } else if (id) {
+    availableScrapers.push(id)
   }
+}
+
+if (!foundScraper) {
+  console.log('Available scrapers:')
+  console.log(availableScrapers.map((id) => `  - ${id}`).join('\n'))
 }

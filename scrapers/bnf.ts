@@ -50,16 +50,16 @@ export default async function* scrape() {
         // Example link:
         //   https://gallica.bnf.fr/ark:/12148/btv1b101007676
         // Example IIIF Manifest ID:
-        //   https://gallica.bnf.fr/iiif/ark:/12148/btv1b532811736/manifest.json
+        //   https://openapi.bnf.fr/iiif/presentation/v3/ark:/12148/btv1b10100817h/manifest.json
         // Example IIIF Image ID:
-        //   https://gallica.bnf.fr/iiif/ark:/12148/btv1b532811736/f1
+        //   https://openapi.bnf.fr/iiif/image/v3/ark:/12148/btv1b10100817h/f1/info.json
 
         const match = link.match(/ark:\/(?<id>.+)/)
         const id = match?.groups?.id
 
         const title = record['srw:recordData']['oai_dc:dc']['dc:title']
-        const manifestId = `https://gallica.bnf.fr/iiif/ark:/${id}/manifest.json`
-        const imageId = `https://gallica.bnf.fr/iiif/ark:/${id}/f1`
+        const manifestId = `https://openapi.bnf.fr/iiif/presentation/v3/ark:/${id}/manifest.json`
+        const imageId = `https://openapi.bnf.fr/iiif/image/v3/ark:/${id}/f1/info.json`
 
         if (title && manifestId && imageId) {
           yield {
